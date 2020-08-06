@@ -1,50 +1,51 @@
 package com.example.thread02062020;
 
-import androidx.annotation.MainThread;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
 
+    int a , b  ,c;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        a = b = c = 0;
 
-//        Background Thread
-//        MainThread
-
-        Thread threada = new Thread(new Runnable() {
+        Thread threadA = new Thread(new Runnable() {
             @Override
             public void run() {
-                printLog("A");
+                for (int i = 1 ; i <= 10 ; i++){
+                    a = i;
+                    Log.d("BBB" , "A : " + i);
+                }
+            }
+        });
+        Thread threadB = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 1 ; i <= 10 ; i++){
+                    b = i;
+                    Log.d("BBB" , "B : " + i);
+                }
+            }
+        });
+        Thread threadC = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 1 ; i <= 10 ; i++){
+                    c = a + b;
+                    Log.d("BBB" , "c : " + i);
+                }
             }
         });
 
-        Thread threadb = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                printLog("B");
-            }
-        });
-
-        threada.start();
-        threadb.start();
-//
-//        Thread xử lý dữ lieu
-//        Thread xử lý hình ảnh
-
+        threadA.start();
+        threadB.start();
+        threadC.start();
     }
-    public synchronized void printLog(String name){
-        for (int i = 0 ; i < 1000 ; i++){
-            Log.d("BBB", name  + " : " + i);
-        }
-    }
+
 }
