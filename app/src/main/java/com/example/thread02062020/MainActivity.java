@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,16 +17,34 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 //        Background Thread
 //        MainThread
 
-        final Thread thread = new Thread(new Runnable() {
+        Thread threada = new Thread(new Runnable() {
             @Override
             public void run() {
-                Log.d("BBB","Thread running");
+                printLog("A");
             }
         });
-        thread.start();
 
+        Thread threadb = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                printLog("B");
+            }
+        });
+
+        threada.start();
+        threadb.start();
+//
+//        Thread xử lý dữ lieu
+//        Thread xử lý hình ảnh
+
+    }
+    public synchronized void printLog(String name){
+        for (int i = 0 ; i < 1000 ; i++){
+            Log.d("BBB", name  + " : " + i);
+        }
     }
 }
